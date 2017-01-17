@@ -1,34 +1,27 @@
 var express = require('express');
 var router = express.Router();
 var mongojs = require('mongojs');
-var db = mongojs('MONGODB_API_URL');
-
+var db = mongojs('MONGODB_URL_API');
 // Get Todos
 router.get('/listings', function(req, res, next){
-    db.listing
-    s.find(function(err, listing
-        s){
+    db.listings.find(function(err, listings){
         if(err){
            res.send(err); 
         } else {
-           res.json(listing
-            s);
+           res.json(listings);
         }
     });
 });
 
 // Get Single Todo
 router.get('/listing/:id', function(req, res, next){
-    db.listing
-    s.findOne({
+    db.listings.findOne({
         _id: mongojs.ObjectId(req.params.id)
-    }, function(err, listing
-        ){
+    }, function(err, listing){
         if(err){
            res.send(err); 
         } else {
-           res.json(listing
-            );
+           res.json(listing);
         }
     });
 });
@@ -37,16 +30,13 @@ router.get('/listing/:id', function(req, res, next){
 router.post('/listing', function(req, res, next){
     var listing
      = req.body;
-    if(!listing
-        .text || !(listing
-        .isCompleted + '')){
+    if(!listing.text || !(listing.isCompleted + '')){
         res.status(400);
         res.json({
             "error": "Invalid Data"
         });
     } else {
-        db.save(listing
-            , function(err, result){
+        db.save(listing, function(err, result){
             if(err){
                 res.send(err); 
             } else {
@@ -58,20 +48,15 @@ router.post('/listing', function(req, res, next){
 
 // Update Todo
 router.put('/listing/:id', function(req, res, next){
-    var listing
-     = req.body;
+    var listing = req.body;
     var updObj = {};
     
-    if(listing
-        .isCompleted){
-       updObj.isCompleted = listing
-   .isCompleted;
+    if(listing.isCompleted){
+        updObj.isCompleted = listing.isCompleted;
     }
     
-    if(listing
-        .text){
-        updObj.text = listing
-    .text;
+    if(listing.text){
+        updObj.text = listing.text;
     }
     
     if(!updObj){
@@ -80,8 +65,7 @@ router.put('/listing/:id', function(req, res, next){
             "error": "Invalid Data"
         });
     } else {
-        db.listing
-        s.update({
+        db.listings.update({
             _id: mongojs.ObjectId(req.params.id)
         },updObj, {}, function(err, result){
             if(err){
@@ -95,8 +79,7 @@ router.put('/listing/:id', function(req, res, next){
 
 // Delete Todo
 router.delete('/listing/:id', function(req, res, next){
-    db.listing
-    s.remove({
+    db.listings.remove({
         _id: mongojs.ObjectId(req.params.id)
     },'', function(err, result){
         if(err){

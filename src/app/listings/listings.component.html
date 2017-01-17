@@ -1,3 +1,12 @@
-<p>
-  listings works!
-</p>
+<div class="container">
+  <div class="row" *ngIf='listings.length > 0'>
+    <div class="col-md-3" *ngFor="let listing of listings">
+      <div class="card card-block">
+        <h4 class="card-title">{{ listing.title }}</h4>
+        <p class="card-text">{{listing.description}}</p>
+        <a href="#" class="card-link">Card link</a>
+        <a href="#" class="card-link">Another link</a>
+      </div>
+    </div>
+  </div>
+</div>
